@@ -2,13 +2,21 @@
   "name": "floqast-assessment",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "report": "playwright show-report"
+  },
   "keywords": [],
   "author": "",
+  "type": "module",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^22.20.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }
