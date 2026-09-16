@@ -1,7 +1,7 @@
 import { expect, type Page } from "@playwright/test";
 import type { UserInput } from "../../data/users";
 
-type UserResponse = {
+export type UserResponse = {
   id: string;
   name: string;
   email: string;
@@ -30,6 +30,16 @@ export function expectCreateUsersApiResponse(
   expected: UserInput,
 ): void {
   expect(actual.id).toMatch(/^\d+$/);
+  expect(actual.name).toBe(expected.name);
+  expect(actual.email).toBe(expected.email);
+  expect(actual.accountType).toBe(expected.accountType);
+}
+
+export function expectGetUsersApiResponse(
+  actual: UserResponse,
+  expected: UserResponse,
+): void {
+  expect(actual.id).toBe(expected.id);
   expect(actual.name).toBe(expected.name);
   expect(actual.email).toBe(expected.email);
   expect(actual.accountType).toBe(expected.accountType);

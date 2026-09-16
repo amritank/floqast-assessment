@@ -5,6 +5,7 @@ import {
   getNextUserId,
   transactionsByUserId,
 } from "../data/store.js";
+import { checkAuth, requirePermissions } from "../middleware/auth.js";
 
 const router = express.Router();
 const emailFormat = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -63,15 +64,20 @@ router.post("/", async (req, res) => {
   return res.status(201).json(newUser);
 });
 
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
-  console.log(`user id: ${id}`);
-  if (usersById.has(id)) {
-    console.log("exists");
-    return res.status(200).json(usersById.get(id));
-  } else {
-    return res.status(404).json({ error: "Failed to find user" });
-  }
-});
+router.get(
+  "/:id",
+  checkAuth,
+  requirePermissions("customer"),
+  async (req, res) => {
+    const id = req.params.id;
+    console.log(`user id: ${id}`);
+    if (usersById.has(id)) {
+      console.log("exists");
+      return res.status(200).json(usersById.get(id));
+    } else {
+      return res.status(404).json({ error: "Failed to find user" });
+    }
+  },
+);
 
 export default router;

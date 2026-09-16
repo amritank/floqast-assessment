@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
 import { environmentSpec } from "../../config/environment.ts";
-import { createUser } from "../../data/users.ts";
-import { expectCreateUsersApiResponse } from "../assertions/users.ts";
+import { createUser, aliceUser } from "../../data/users.ts";
+import {
+  expectCreateUsersApiResponse,
+  expectGetUsersApiResponse,
+} from "../assertions/users.ts";
 import { logApiRequest, logApiResponse } from "../../utils/api-logger.ts";
 const API_URL = environmentSpec.apiBaseUrl;
 const createUsersUrl = `${API_URL}/api/users`;
@@ -28,7 +31,10 @@ test("creates a new user and retrieves the user", async ({
 
   expectCreateUsersApiResponse(data, newUser);
   const getRes = await request.get(`${createUsersUrl}/${data.id}`, {
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      authorization: "Bearer admin-token",
+    },
   });
   const getData = await getRes.json();
   console.log(`${getData}`);
@@ -226,10 +232,96 @@ test("returns not found for an unknown user", async ({ request }, testInfo) => {
     url: url,
   });
   const res = await request.get(url, {
-    headers: { "content-type": "application/json" },
+    headers: {
+      "content-type": "application/json",
+      authorization: "Bearer admin-token",
+    },
   });
   const data = await res.json();
   await logApiResponse(logFilePath, { res: res, body: data });
   expect(res.status()).toBe(404);
   expect(data.error).toBe("Failed to find user");
+});
+
+test("get user data with a valid token", async ({ request }, testInfo) => {
+  const logFilePath = testInfo.outputPath("api.log");
+  const url = `${createUsersUrl}/1`;
+  await logApiRequest(logFilePath, {
+    method: "GET",
+    url: url,
+  });
+  const res = await request.get(url, {
+    headers: {
+      "content-type": "application/json",
+      authorization: "Bearer alice-token",
+    },
+  });
+  const data = await res.json();
+  await logApiResponse(logFilePath, { res: res, body: data });
+  expect(res.status()).toBe(200);
+  expectGetUsersApiResponse(data, aliceUser());
+});
+
+test("get user data fails with an expired token", async ({
+  request,
+}, testInfo) => {
+  const logFilePath = testInfo.outputPath("api.log");
+  const url = `${createUsersUrl}/1`;
+  await logApiRequest(logFilePath, {
+    method: "GET",
+    url: url,
+  });
+  const res = await request.get(url, {
+    headers: {
+      "content-type": "application/json",
+      authorization: "Bearer alice-expired-token",
+    },
+  });
+  const data = await res.json();
+  await logApiResponse(logFilePath, { res: res, body: data });
+  expect(res.status()).toBe(401);
+  expect(data.error).toBe("Token expired!");
+});
+
+test("get user dats fails with an invalid token", async ({
+  request,
+}, testInfo) => {
+  const logFilePath = testInfo.outputPath("api.log");
+  const url = `${createUsersUrl}/1`;
+  await logApiRequest(logFilePath, {
+    method: "GET",
+    url: url,
+  });
+  const res = await request.get(url, {
+    headers: {
+      "content-type": "application/json",
+      authorization: "Bearer invalid-token",
+    },
+  });
+  const data = await res.json();
+  await logApiResponse(logFilePath, { res: res, body: data });
+  expect(res.status()).toBe(401);
+  expect(data.error).toBe("Unauthorized!");
+});
+
+// User 2 (bob) tries to access Alice's data
+test("get user data with insufficient permissions", async ({
+  request,
+}, testInfo) => {
+  const logFilePath = testInfo.outputPath("api.log");
+  const url = `${createUsersUrl}/1`;
+  await logApiRequest(logFilePath, {
+    method: "GET",
+    url: url,
+  });
+  const res = await request.get(url, {
+    headers: {
+      "content-type": "application/json",
+      authorization: "Bearer bob-token",
+    },
+  });
+  const data = await res.json();
+  await logApiResponse(logFilePath, { res: res, body: data });
+  expect(res.status()).toBe(403);
+  expect(data.error).toBe("User has insufficient permissions!");
 });

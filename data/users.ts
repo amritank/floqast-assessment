@@ -1,4 +1,5 @@
 import { randomUUID } from "node:crypto";
+import type { UserResponse } from "../tests/assertions/users";
 
 export type UserInput = {
   name: string;
@@ -14,5 +15,14 @@ export function createUser(overrides: Partial<UserInput> = {}): UserInput {
     email: `sample-${uniqueid}@gmail.com`,
     accountType: "basic",
     ...overrides,
+  };
+}
+
+export function aliceUser(): UserResponse {
+  return {
+    id: "1",
+    name: "Alice K",
+    email: "alice@example.test",
+    accountType: "premium",
   };
 }
