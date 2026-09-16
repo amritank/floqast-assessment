@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Transactions</title>
+  </head>
+  <body>
+    <form id="create-transactions">
+      <label for="amount">Amount</label>
+      <input id="amount" type="number" />
+      <label for="type">Type</label>
+      <select id="type" name="transactionType">
+        <option value="transfer" selected>Transfer</option>
+      </select>
+      <label for="recipient">Recipient</label>
+      <input id="recipient" type="number" />
+      <p id="status-msg" role="status"></p>
+      <button type="submit">Create Transaction</button>
+    </form>
+    <script src="transactions.js" type="module"></script>
+  </body>
+</html>

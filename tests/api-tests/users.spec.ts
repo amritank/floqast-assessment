@@ -153,7 +153,7 @@ test("rejects a user request with duplicate email", async ({
     data: newUser,
   });
   const data = await resRetry.json();
-  await logApiResponse(logFilePath, { res: res, body: data });
+  await logApiResponse(logFilePath, { res: resRetry, body: data });
   expect(resRetry.status()).toBe(409);
   expect(data.error).toBe("Duplicate user record found");
 });
@@ -305,7 +305,7 @@ test("get user dats fails with an invalid token", async ({
 });
 
 // User 2 (bob) tries to access Alice's data
-test("get user data with insufficient permissions", async ({
+test("get user data fails with insufficient permissions", async ({
   request,
 }, testInfo) => {
   const logFilePath = testInfo.outputPath("api.log");
@@ -324,4 +324,22 @@ test("get user data with insufficient permissions", async ({
   await logApiResponse(logFilePath, { res: res, body: data });
   expect(res.status()).toBe(403);
   expect(data.error).toBe("User has insufficient permissions!");
+});
+
+test("get user data fails with no token", async ({ request }, testInfo) => {
+  const logFilePath = testInfo.outputPath("api.log");
+  const url = `${createUsersUrl}/1`;
+  await logApiRequest(logFilePath, {
+    method: "GET",
+    url: url,
+  });
+  const res = await request.get(url, {
+    headers: {
+      "content-type": "application/json",
+    },
+  });
+  const data = await res.json();
+  await logApiResponse(logFilePath, { res: res, body: data });
+  expect(res.status()).toBe(401);
+  expect(data.error).toBe("Unauthorized!");
 });

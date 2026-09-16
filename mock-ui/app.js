@@ -1,6 +1,7 @@
 import { addUsers } from "./api.js";
 
 const form = document.getElementById("add-user-form");
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const msgEl = document.getElementById("status-msg");
