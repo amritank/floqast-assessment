@@ -68,10 +68,10 @@ router.post("/", async (req, res) => {
 router.get(
   "/:id",
   checkAuth,
-  requirePermissions("customer"),
+  requirePermissions("customer", "id"),
   async (req, res) => {
     const id = req.params.id;
-    console.log(`user id: ${id}`);
+
     if (usersById.has(id)) {
       console.log("exists");
       return res.status(200).json(usersById.get(id));

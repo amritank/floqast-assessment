@@ -27,12 +27,23 @@ export function checkAuth(req, res, next) {
 
 // validate if the token passed in has sufficient permissions
 // 403 will be returned if user role is not admin and
-export function requirePermissions(inputRole) {
+export function requirePermissions(inputRole, paramName) {
   return (req, res, next) => {
     if (
-      req.user?.role != "admin" &&
-      (req.user.id !== req.params.id || req.user?.role !== inputRole)
+      req.user?.role !== "admin" &&
+      (req.user.id !== req.params[paramName] || req.user?.role !== inputRole)
     ) {
+      return res
+        .status(403)
+        .json({ error: "User has insufficient permissions!" });
+    }
+    next();
+  };
+}
+
+export function requireCustomerRole(inputRole) {
+  return (req, res, next) => {
+    if (req.user?.role !== inputRole) {
       return res
         .status(403)
         .json({ error: "User has insufficient permissions!" });
