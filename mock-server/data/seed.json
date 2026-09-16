@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "Alice K",
+    "email": "alice@example.test",
+    "accountType": "premium"
+  },
+  {
+    "id": "2",
+    "name": "Bob Dylan",
+    "email": "bob@example.test",
+    "accountType": "basic"
+  },
+  {
+    "id": "3",
+    "name": "Admin User",
+    "email": "admin@example.test",
+    "accountType": "basic"
+  }
+]

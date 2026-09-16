@@ -1,3 +1,5 @@
+import { addUsers } from "./api.js";
+
 const form = document.getElementById("add-user-form");
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -24,8 +26,8 @@ form.addEventListener("submit", async (event) => {
       msgEl.textContent = "Enter a valid email address";
       return;
     }
-    //TODO api call
-    msgEl.textContent = "Added user with user id: user-1";
+    const res = await addUsers(name, email, accountType);
+    msgEl.textContent = `Added user with user id: ${res.id}`;
     form.reset();
   } catch (err) {
     msgEl.textContent = err.message;

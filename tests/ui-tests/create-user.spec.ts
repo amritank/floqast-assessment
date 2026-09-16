@@ -17,7 +17,7 @@ test("creates a new user and clears the form", async ({ page }) => {
       status: 201,
       contentType: "application/json",
       body: JSON.stringify({
-        id: "user-1",
+        id: "4",
         ...newUser,
       }),
     });
@@ -29,7 +29,7 @@ test("creates a new user and clears the form", async ({ page }) => {
   await page.getByLabel("Account Type").selectOption(newUser.accountType);
   await page.getByRole("button", { name: "Add User" }).click();
   await expect(page.getByRole("status")).toHaveText(
-    new RegExp("Added user with user id: user-1"),
+    new RegExp(/^Added user with user id: \d+$/),
   );
   await expectUserFormToBeCleared(page);
 });

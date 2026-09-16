@@ -79,6 +79,7 @@ export default defineConfig({
         url: environmentSpec.uiBaseUrl,
         reuseExistingServer: !process.env.CI,
         stdout: "pipe",
+        name: "mock-be",
       }
     : undefined,
 });
