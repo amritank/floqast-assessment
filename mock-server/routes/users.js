@@ -13,12 +13,12 @@ const supportedName = /^[A-Za-z]+(?:[ '-][A-Za-z]+)*$/;
 router.post("/", async (req, res) => {
   let { name, email, accountType } = req.body;
   if (
-    !name.trim() ||
-    !email.trim() ||
-    !accountType.trim() ||
     typeof name !== "string" ||
     typeof email !== "string" ||
-    typeof accountType !== "string"
+    typeof accountType !== "string" ||
+    !name.trim() ||
+    !email.trim() ||
+    !accountType.trim()
   ) {
     return res.status(400).json({
       error: "Invalid request: name, email and accountType are required!",
@@ -62,12 +62,15 @@ router.post("/", async (req, res) => {
   transactionsByUserId.set(userId, []);
   return res.status(201).json(newUser);
 });
+
 router.get("/:id", async (req, res) => {
   const id = req.params.id;
+  console.log(`user id: ${id}`);
   if (usersById.has(id)) {
+    console.log("exists");
     return res.status(200).json(usersById.get(id));
   } else {
-    return res.status(400).json({ error: "Failed to find user" });
+    return res.status(404).json({ error: "Failed to find user" });
   }
 });
 
