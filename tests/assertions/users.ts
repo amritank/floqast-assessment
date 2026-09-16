@@ -6,6 +6,7 @@ export type UserResponse = {
   name: string;
   email: string;
   accountType: string;
+  balanceCents: number;
 };
 
 export async function expectUserFormToBeCleared(page: Page): Promise<void> {
@@ -33,6 +34,7 @@ export function expectCreateUsersApiResponse(
   expect(actual.name).toBe(expected.name);
   expect(actual.email).toBe(expected.email);
   expect(actual.accountType).toBe(expected.accountType);
+  expect(actual.balanceCents).toBe(0);
 }
 
 export function expectGetUsersApiResponse(
@@ -43,4 +45,5 @@ export function expectGetUsersApiResponse(
   expect(actual.name).toBe(expected.name);
   expect(actual.email).toBe(expected.email);
   expect(actual.accountType).toBe(expected.accountType);
+  expect(actual.balanceCents).toBeGreaterThanOrEqual(0);
 }

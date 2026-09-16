@@ -56,6 +56,7 @@ router.post("/", async (req, res) => {
     name,
     email,
     accountType,
+    balanceCents: 0,
   };
 
   usersById.set(userId, newUser);

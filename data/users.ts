@@ -24,5 +24,6 @@ export function aliceUser(): UserResponse {
     name: "Alice K",
     email: "alice@example.test",
     accountType: "premium",
+    balanceCents: 10000,
   };
 }
