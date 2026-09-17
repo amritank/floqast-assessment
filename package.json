@@ -2,13 +2,27 @@
   "name": "floqast-assessment",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "playwright test",
+    "test:chromium": "playwright test --project=chromium",
+    "test:usersapitests": "playwright test tests/api-tests/*.spec.ts",
+    "test:usersuitests": "playwright test tests/ui-tests/*.spec.ts",
+    "test:transactionapitests": "playwright test tests/api-tests/transactions.spec.ts --workers=1",
+    "test:transactionuitests": "playwright test tests/ui-tests/create-transactions.spec.ts --workers=1",
+    "test:e2etests": "playwright test tests/e2e-tests/user-registration-and-transfer.spec.ts --workers=1",
+    "report": "playwright show-report"
+  },
   "keywords": [],
   "author": "",
+  "type": "module",
   "license": "ISC",
   "description": "",
   "devDependencies": {
     "@playwright/test": "^1.63.0",
     "@types/node": "^22.20.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
   }
 }

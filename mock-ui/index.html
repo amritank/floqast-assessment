@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add a User</title>
+  </head>
+  <body>
+    <form id="add-user-form">
+      <label for="name">Name</label>
+      <input id="name" type="text" />
+      <label for="email">Email</label>
+      <input id="email" type="text" />
+      <label for="account-type">Account Type</label>
+      <select id="account-type" name="accountType">
+        <option value="basic" selected>Basic</option>
+        <option value="premium">Premium</option>
+      </select>
+      <p id="status-msg" role="status"></p>
+      <button type="submit">Add User</button>
+    </form>
+    <script src="app.js" type="module"></script>
+  </body>
+</html>

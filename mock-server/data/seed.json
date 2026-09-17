@@ -1,0 +1,22 @@
+[
+  {
+    "id": "1",
+    "name": "Alice K",
+    "email": "alice@example.test",
+    "accountType": "premium",
+    "balanceCents": 10000
+  },
+  {
+    "id": "2",
+    "name": "Bob Dylan",
+    "email": "bob@example.test",
+    "accountType": "basic",
+    "balanceCents": 10000
+  },
+  {
+    "id": "3",
+    "name": "Admin User",
+    "email": "admin@example.test",
+    "accountType": "basic"
+  }
+]
