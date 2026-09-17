@@ -5,9 +5,10 @@
   "scripts": {
     "test": "playwright test",
     "test:chromium": "playwright test --project=chromium",
-    "test:apitests": "playwright test tests/api-tests/*.spec.ts",
-    "test:uitests": "playwright test tests/ui-tests/*.spec.ts",
+    "test:usersapitests": "playwright test tests/api-tests/*.spec.ts",
+    "test:usersuitests": "playwright test tests/ui-tests/*.spec.ts",
     "test:transactionapitests": "playwright test tests/api-tests/transactions.spec.ts --workers=1",
+    "test:transactionuitests": "playwright test tests/ui-tests/create-transactions.spec.ts --workers=1",
     "report": "playwright show-report"
   },
   "keywords": [],

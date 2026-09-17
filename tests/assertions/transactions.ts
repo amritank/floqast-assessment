@@ -14,7 +14,7 @@ export async function expectTransactionFormToBeCleared(
   page: Page,
 ): Promise<void> {
   await expect(page.getByLabel("Amount")).toHaveValue("");
-  await expect(page.getByLabel("Transfer Type")).toHaveValue("Transfer");
+  await expect(page.getByLabel("Transfer Type")).toHaveValue("transfer");
   await expect(page.getByLabel("Recipient")).toHaveValue("");
 }
 

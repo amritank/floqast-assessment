@@ -479,8 +479,8 @@ test("rejects a transaction request due to insufficient sender funds", async ({
   expect(afterMockUsr2Res.status()).toBe(200);
   const afterMockUsr2Bal = afterMockUsr2Data.balanceCents;
 
-  expect(beforeMockUsr1Bal.balanceCents).toEqual(afterMockUsr1Bal.balanceCents);
-  expect(beforeMockUsr2Bal.balanceCents).toEqual(afterMockUsr2Bal.balanceCents);
+  expect(beforeMockUsr1Bal).toEqual(afterMockUsr1Bal);
+  expect(beforeMockUsr2Bal).toEqual(afterMockUsr2Bal);
 });
 
 // Get transaction test cases
@@ -570,3 +570,10 @@ test("get transaction fails due to insufficient permissions", async ({
   expect(res.status()).toBe(403);
   expect(data.error).toBe("User has insufficient permissions!");
 });
+
+/***
+ * In interest of time skipping the following usecases
+ * >> rejects a create transaction request if amount is missing
+ * >> rejects a create transaction request if transfer type is missing
+ * >> rejects a create transaction request if recipient Id is missing
+ */

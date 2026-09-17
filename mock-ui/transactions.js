@@ -43,7 +43,7 @@ transactionForm.addEventListener("submit", async (event) => {
       mockSession.accessToken,
     );
 
-    msgEl.textContent = `Successfully transferred amount: ${res.amountCents} from user: ${res.senderId} to ${res.recipientId}`;
+    msgEl.textContent = `Transfer of amount: ${res.amountCents} completed successfully.`;
     transactionForm.reset();
   } catch (err) {
     msgEl.textContent = err.message;
