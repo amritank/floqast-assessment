@@ -9,6 +9,7 @@
     "test:usersuitests": "playwright test tests/ui-tests/*.spec.ts",
     "test:transactionapitests": "playwright test tests/api-tests/transactions.spec.ts --workers=1",
     "test:transactionuitests": "playwright test tests/ui-tests/create-transactions.spec.ts --workers=1",
+    "test:e2etests": "playwright test tests/e2e-tests/user-registration-and-transfer.spec.ts --workers=1",
     "report": "playwright show-report"
   },
   "keywords": [],
